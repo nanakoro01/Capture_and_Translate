@@ -4,7 +4,7 @@ from tkinter import Canvas, Tk, messagebox
 
 from PIL import ImageGrab
 
-SCREENSHOT_PATH = Path("./screenshot.png")
+SCREENSHOT_PATH = "./screenshot.png"
 
 
 class ScreenCaptureApp:
@@ -99,7 +99,7 @@ class ScreenCaptureApp:
             y2 (int): 矩形の右下のY座標。
         """
         img = ImageGrab.grab(bbox=(x1, y1, x2, y2))
-        img.save(SCREENSHOT_PATH)
+        img.save(Path(SCREENSHOT_PATH))
 
 
 if __name__ == "__main__":
