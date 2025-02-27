@@ -1,26 +1,29 @@
 import os
+from typing import Union
 
 from PIL import Image
 from PIL.ExifTags import TAGS
 
+PHOTO_PATH = r"C:\0\Work\GReeeeN _遥か_卒業パーティーEdit\photo"
 
-class ImageRenamer:
-    def __init__(self, directory: str) -> None:
-        """ImageRenamerのコンストラクタ。
+
+class PhotoRenamer:
+    def __init__(self, photo_folder: str) -> None:
+        """PhotoRenamerのコンストラクタ。
 
         Args:
-            directory (str): 画像ファイルが含まれるディレクトリのパス。
+            photo_folder (str): 写真ファイルが含まれるフォルダパス
         """
-        self.directory = directory
+        self.directory = photo_folder
 
-    def get_exif_date_taken(self, image_path: str) -> str:
-        """画像のEXIFデータから撮影日時を取得する関数。
+    def get_exif_date(self, image_path: str) -> Union[str, None]:
+        """写真のEXIFデータから撮影日時を取得する関数。
 
         Args:
-            image_path (str): 画像ファイルのパス。
+            image_path (str): 写真ファイルのパス
 
         Returns:
-            str: 撮影日時を表す文字列。取得できない場合はNone。
+            str: 撮影日時を表す文字列 ※取得できない場合はNone
         """
         with Image.open(image_path) as image:
             exif_data = image._getexif()
@@ -31,12 +34,12 @@ class ImageRenamer:
                         return value.replace(":", "").replace(" ", "_")
         return None
 
-    def rename_images(self) -> None:
-        """ディレクトリ内の画像ファイルを撮影日時に基づいてリネームする関数。"""
+    def rename_photos(self) -> None:
+        """ディレクトリ内の写真ファイルを撮影日時に基づいてリネームする"""
         for filename in os.listdir(self.directory):
             if filename.lower().endswith((".jpg", ".jpeg", ".png")):
                 file_path = os.path.join(self.directory, filename)
-                date_taken = self.get_exif_date_taken(file_path)
+                date_taken = self.get_exif_date(file_path)
                 if date_taken:
                     new_filename = f"{date_taken}{os.path.splitext(filename)[1]}"
                     new_file_path = os.path.join(self.directory, new_filename)
@@ -45,6 +48,5 @@ class ImageRenamer:
 
 
 if __name__ == "__main__":
-    directory = r"C:\0\Work\GReeeeN _遥か_卒業パーティーEdit\photo"
-    renamer = ImageRenamer(directory)
-    renamer.rename_images()
+    renamer = PhotoRenamer(PHOTO_PATH)
+    renamer.rename_photos()
