@@ -4,10 +4,11 @@ from tkinter import Canvas, Tk, messagebox
 
 from PIL import ImageGrab
 
-SCREENSHOT_PATH = "./screenshot.png"
-
 
 class ScreenCaptureApp:
+    DEFAULT_PATH = "./screenshot.png"
+    save_path = DEFAULT_PATH
+
     """スクリーンキャプチャアプリケーションのクラス。
 
     Attributes:
@@ -18,11 +19,12 @@ class ScreenCaptureApp:
         rect (int): 描画された矩形のID。
     """
 
-    def __init__(self, root: Tk) -> None:
+    def __init__(self, root: Tk, image_path: str = DEFAULT_PATH) -> None:
         """ScreenCaptureAppのコンストラクタ。
 
         Args:
             root (Tk): Tkinterのルートウィンドウ。
+            image_path (str): 画像の保存パス
         """
         self.root: Tk = root
         self.root.attributes("-fullscreen", True)
@@ -36,6 +38,9 @@ class ScreenCaptureApp:
         self.canvas.bind("<B1-Motion>", self.on_mouse_drag)
         self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
         self.root.bind("<Escape>", self.on_escape)  # Escキーのバインド
+
+        if image_path:
+            self.save_path = image_path
 
     def on_button_press(self, event: tk.Event) -> None:
         """マウスボタンが押された時のイベントハンドラ。
@@ -99,10 +104,14 @@ class ScreenCaptureApp:
             y2 (int): 矩形の右下のY座標。
         """
         img = ImageGrab.grab(bbox=(x1, y1, x2, y2))
-        img.save(Path(SCREENSHOT_PATH))
+        img.save(Path(self.save_path))
 
 
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
     app = ScreenCaptureApp(root)
     root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
