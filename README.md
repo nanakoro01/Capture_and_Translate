@@ -3,11 +3,13 @@
 ## 環境の構築方法
 - 開発時のPythonのバージョン: 3.12.8
 - 環境構築.batをダブルクリック
-- カレントディレクトリに`.env`ファイルを作成する。設定値は以下の通り
-    ```
-    GEMINI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    DISPLAY_SCALE=150
-    ```
-    - `GEMINI_API_KEY`: Google API Studioで取得したAPIキー
-    - `DISPLAY_SCALE`: Windowsの表示スケール
-        - 通常は`100`、4Kの場合は`150`
+## Pyinstallerを使ったアプリ化の手順
+- アプリ化ビルド.batをダブルクリック
+- `dist/Capture_and_Translate`フォルダに`Capture_and_Translate.exe`が作られるので、ショートカットをスタートメニューに配置するとか、タスクバーに登録するとか、あとはご自由に
+## 使用方法
+- 初回実行時には設定ダイアログが開くので、以下を選択する
+    - Google API Studioで取得したAPIキー
+    - Windowsの表示スケール
+- 2回目以降は画面が薄白くなるので、取り込みたい範囲をマウスで範囲選択する
+- しばらくすると文字起こし結果が表示する
+    - 日本語以外の場合は翻訳して表示する
