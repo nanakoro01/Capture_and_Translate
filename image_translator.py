@@ -48,6 +48,8 @@ def main(capture_path: Path = ImageTranslator.default_capture_path) -> str:
     Returns:
         str: 画像認識結果のテキスト
     """
+    if not capture_path.exists():
+        raise FileNotFoundError(f"キャプチャ画像が見つかりません: {capture_path}")
     translator = ImageTranslator(capture_path)
     return translator.generate_content()
 

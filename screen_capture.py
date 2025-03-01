@@ -96,6 +96,11 @@ class ScreenCaptureApp:
         Args:
             event (tk.Event): Tkinterのイベントオブジェクト。
         """
+        messagebox.showwarning(
+                "警告", "選択作業がキャンセルされました。"
+            )
+        if self.capture_path.exists():
+            self.capture_path.unlink()
         self.root.quit()
 
     def capture_and_save(self, x1: int, y1: int, x2: int, y2: int) -> None:
