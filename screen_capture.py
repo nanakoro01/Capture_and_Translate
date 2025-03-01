@@ -1,15 +1,12 @@
 import tkinter as tk
 from pathlib import Path
 from tkinter import Canvas, Tk, messagebox
-from dotenv import dotenv_values
 
+from dotenv import dotenv_values
 from PIL import ImageGrab
 
 
 class ScreenCaptureApp:
-    DEFAULT_PATH = "./screenshot.png"
-    save_path = DEFAULT_PATH
-
     """スクリーンキャプチャアプリケーションのクラス。
 
     Attributes:
@@ -20,12 +17,14 @@ class ScreenCaptureApp:
         rect (int): 描画された矩形のID。
     """
 
-    def __init__(self, root: Tk, image_path: str = DEFAULT_PATH) -> None:
+    capture_path = default_capture_path = Path.cwd() / "capture.png"
+
+    def __init__(self, root: Tk, capture_path: Path = default_capture_path) -> None:
         """ScreenCaptureAppのコンストラクタ。
 
         Args:
             root (Tk): Tkinterのルートウィンドウ。
-            image_path (str): 画像の保存パス
+            capture_path (str): 画像の保存パス
         """
         # 表示スケールを取得する
         self.config = dotenv_values()
@@ -45,8 +44,7 @@ class ScreenCaptureApp:
         self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
         self.root.bind("<Escape>", self.on_escape)  # Escキーのバインド
 
-        if image_path:
-            self.save_path = image_path
+        self.capture_path = capture_path
 
     def on_button_press(self, event: tk.Event) -> None:
         """マウスボタンが押された時のイベントハンドラ。
@@ -116,12 +114,13 @@ class ScreenCaptureApp:
         y2_scaled = int(y2 * self.display_scale)
 
         img = ImageGrab.grab(bbox=(x1_scaled, y1_scaled, x2_scaled, y2_scaled))
-        img.save(Path(self.save_path))
+        img.save(Path(self.capture_path))
 
 
-def main():
+def main(capture_path: Path = ScreenCaptureApp.default_capture_path) -> None:
+    """スクリーンキャプチャアプリケーションを起動する。"""
     root = tk.Tk()
-    app = ScreenCaptureApp(root)
+    app = ScreenCaptureApp(root, capture_path)
     root.mainloop()
 
 
