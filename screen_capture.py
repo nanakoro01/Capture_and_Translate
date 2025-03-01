@@ -1,6 +1,7 @@
 import tkinter as tk
 from pathlib import Path
 from tkinter import Canvas, Tk, messagebox
+from dotenv import dotenv_values
 
 from PIL import ImageGrab
 
@@ -26,6 +27,11 @@ class ScreenCaptureApp:
             root (Tk): Tkinterのルートウィンドウ。
             image_path (str): 画像の保存パス
         """
+        # 表示スケールを取得する
+        self.config = dotenv_values()
+        self.display_scale = float(self.config.get("DISPLAY_SCALE", 100)) / 100.0
+
+        # キャプチャ対象の画像を作成する
         self.root: Tk = root
         self.root.attributes("-fullscreen", True)
         self.root.attributes("-alpha", 0.3)
@@ -103,7 +109,13 @@ class ScreenCaptureApp:
             x2 (int): 矩形の右下のX座標。
             y2 (int): 矩形の右下のY座標。
         """
-        img = ImageGrab.grab(bbox=(x1, y1, x2, y2))
+        # スケールに応じて座標を調整
+        x1_scaled = int(x1 * self.display_scale)
+        y1_scaled = int(y1 * self.display_scale)
+        x2_scaled = int(x2 * self.display_scale)
+        y2_scaled = int(y2 * self.display_scale)
+
+        img = ImageGrab.grab(bbox=(x1_scaled, y1_scaled, x2_scaled, y2_scaled))
         img.save(Path(self.save_path))
 
 
