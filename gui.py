@@ -2,6 +2,8 @@ import sys
 import tkinter as tk
 from pathlib import Path
 
+import pyperclip
+
 import image_translator
 import screen_capture
 import settings
@@ -47,6 +49,7 @@ class CaptureAndTranslateGUI:
         if not self.CAPTURE_PATH.exists():
             sys.exit()
         text = image_translator.main(self.CAPTURE_PATH)
+        pyperclip.copy(text)
         self.show_text_dialog(text)
 
 
