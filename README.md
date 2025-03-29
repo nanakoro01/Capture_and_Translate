@@ -16,5 +16,6 @@
 ## 使っているパッケージ
 - google-generativeai 0.8.4
 - pillow 11.1.0
+- pyinstaller 6.12.0
 - pyperclip 1.9.0
 - python-dotenv 1.1.0
