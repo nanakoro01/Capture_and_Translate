@@ -125,7 +125,7 @@ class ScreenCaptureApp:
 def main(capture_path: Path = ScreenCaptureApp.default_capture_path) -> None:
     """スクリーンキャプチャアプリケーションを起動する。"""
     root = tk.Tk()
-    app = ScreenCaptureApp(root, capture_path)
+    ScreenCaptureApp(root, capture_path)
     root.mainloop()
 
 
