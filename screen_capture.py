@@ -88,7 +88,7 @@ class ScreenCaptureApp:
         else:
             self.root.withdraw()
             self.capture_and_save(x1, y1, x2, y2)
-            self.root.quit()
+            self.root.destroy()
 
     def on_escape(self, event: tk.Event) -> None:
         """Escキーが押された時のイベントハンドラ。
@@ -96,12 +96,10 @@ class ScreenCaptureApp:
         Args:
             event (tk.Event): Tkinterのイベントオブジェクト。
         """
-        messagebox.showwarning(
-                "警告", "選択作業がキャンセルされました。"
-            )
+        messagebox.showwarning("警告", "選択作業がキャンセルされました。")
         if self.capture_path.exists():
             self.capture_path.unlink()
-        self.root.quit()
+        self.root.destroy()
 
     def capture_and_save(self, x1: int, y1: int, x2: int, y2: int) -> None:
         """スクリーンキャプチャを行い、画像を保存する。
@@ -120,6 +118,7 @@ class ScreenCaptureApp:
 
         img = ImageGrab.grab(bbox=(x1_scaled, y1_scaled, x2_scaled, y2_scaled))
         img.save(Path(self.capture_path))
+        self.root.destroy()
 
 
 def main(capture_path: Path = ScreenCaptureApp.default_capture_path) -> None:
