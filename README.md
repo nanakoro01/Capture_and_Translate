@@ -3,11 +3,13 @@
 ## 環境の構築方法
 - 開発時のPythonのバージョン: 3.12.8
 - 環境構築.batをダブルクリック
-## 実行用ショートカットの作り方
-- `Capture and Translate.bat`からショートカットファイルを作成する
-- ショートカットのプロパティを開き、以下を変更する
+## 実行用バッチファイルをタスクバーにピン止めする方法
+- デスクトップに新規テキストファイルを作成し、ファイル名を`Capture and Translate.exe`にする
+- `Capture and Translate.exe`をタスクバーにドラッグアンドドロップしてピン止めする
+- プロパティを開き、以下のように変更する
+    - リンク先: `Capture and Translate.bat`のファイルパス
+    - 作業フォルダー: `Capture and Translate.bat`のディレクトリパス
     - 実行時の大きさ: 最小化
-    - アイコンの変更: %SystemRoot%\System32\SHELL32.dllから適当に
 ## 使用方法
 - 初回実行時には設定ダイアログが開くので、以下を選択する
     - Google API Studioで取得したAPIキー
