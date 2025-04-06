@@ -1,58 +1,80 @@
-import sys
-import tkinter as tk
 from pathlib import Path
 
+import customtkinter as ctk
 import pyperclip
 
 import image_translator
 import screen_capture
 import settings
 
+CAPTURE_PATH = Path.cwd() / "capture.png"  # キャプチャ画像の保存先パス
+ENV_PATH = Path.cwd() / ".env"  # 設定ファイルのパス
 
-class CaptureAndTranslateGUI:
-    def __init__(self):
-        self.CAPTURE_PATH = Path.cwd() / "capture.png"  # キャプチャ画像の保存先パス
-        self.ENV_PATH = Path.cwd() / ".env"  # 設定ファイルのパス
+# 表示フォント
+FONT_PATH = Path.cwd() / "UDEVGothicJPDOC-Regular.ttf"  # ファイルパス
+FONT_TYPE = "UDEV Gothic JPDOC Regular"  # フォントタイプ
+FONT_SIZE = 14  # フォントサイズ
 
-        # 設定ファイルの存在チェック
-        if not self.ENV_PATH.exists():
-            settings.main()
-            sys.exit()
 
-    def click_close(self) -> None:
-        """イベントハンドラ: ウィンドウを閉じるボタンがクリックされた"""
-        sys.exit()
+class CaptureAndTranslateGUI(ctk.CTk):
+    def __init__(self, text: str):
+        """コンストラクタ
 
-    def show_text_dialog(self, text: str) -> None:
+        Args:
+            text (str): 表示するテキスト
+        """
+        super().__init__()
+        ctk.FontManager.load_font(FONT_PATH.as_posix())  # フォントを読み込む
+
+        self.text = text
+
+        # フォームのセットアップをする
+        self.setup_form(self.text)
+
+    def setup_form(self, text: str) -> None:
         """キャプチャ結果を表示するダイアログを表示する
 
         Args:
             text (str): 表示するキャプチャ結果のテキスト
         """
-        dialog = tk.Tk()
-        dialog.title("キャプチャ結果")
+        ctk.set_appearance_mode("System")  # 外観モードを設定
+        ctk.set_default_color_theme("blue")  # カラーテーマを設定
 
-        text_area = tk.Text(dialog, wrap="word")
+        # フォームサイズ設定
+        self.geometry("800x600")
+        self.title("Capture and Translate")
+
+        text_area = ctk.CTkTextbox(
+            master=self, font=ctk.CTkFont(family=FONT_TYPE, size=FONT_SIZE), wrap="word"
+        )  # CTkTextboxを使用
+        text_area.insert("1.0", text)  # テキストを挿入
         text_area.pack(expand=True, fill="both")
 
-        text_area.insert("1.0", text)
-        text_area.config(state="normal")
+    def click_close(self) -> None:
+        """イベントハンドラ: ウィンドウを閉じるボタンがクリックされた"""
+        self.destroy()
 
-        dialog.protocol(
-            "WM_DELETE_WINDOW", self.click_close
-        )  # ウィンドウを閉じるボタンのイベントハンドラを設定
 
-        dialog.mainloop()
+def main() -> None:
+    """メイン関数"""
+    # 設定ファイルが存在しない場合、Settingsを表示して終了する
+    if not ENV_PATH.exists():
+        settings.main()
+        return
 
-    def main(self):
-        screen_capture.main(self.CAPTURE_PATH)
-        if not self.CAPTURE_PATH.exists():
-            sys.exit()
-        text = image_translator.main(self.CAPTURE_PATH)
-        pyperclip.copy(text)
-        self.show_text_dialog(text)
+    # 画面をキャプチャする
+    screen_capture.main(CAPTURE_PATH)
+    if not CAPTURE_PATH.exists():
+        return
+
+    # キャプチャ画像を文字起こしする
+    text = image_translator.main(CAPTURE_PATH)
+    pyperclip.copy(text)
+
+    # キャプチャ結果を表示する
+    app = CaptureAndTranslateGUI(text)
+    app.mainloop()
 
 
 if __name__ == "__main__":
-    app = CaptureAndTranslateGUI()
-    app.main()
+    main()
