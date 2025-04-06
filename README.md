@@ -20,4 +20,4 @@
 - google-generativeai 0.8.4 (pip install google-generativeai)
 - pillow 11.1.0 (pip install pillow)
 - pyperclip 1.9.0 (pip install pyperclip)
-- python-dotenv 1.1.0 (pip install customtkinter)
+- python-dotenv 1.1.0 (pip install python-dotenv)
