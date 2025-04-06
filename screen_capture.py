@@ -118,7 +118,6 @@ class ScreenCaptureApp:
 
         img = ImageGrab.grab(bbox=(x1_scaled, y1_scaled, x2_scaled, y2_scaled))
         img.save(Path(self.capture_path))
-        self.root.destroy()
 
 
 def main(capture_path: Path = ScreenCaptureApp.default_capture_path) -> None:
