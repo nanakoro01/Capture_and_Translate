@@ -8,3 +8,4 @@ dist/
 launch.json
 capture.png
 *.spec
+*.lnk
