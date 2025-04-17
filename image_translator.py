@@ -13,9 +13,16 @@ class ImageTranslator:
         model (genai.GenerativeModel): GenerativeModelオブジェクト
         capture_path (Path): キャプチャ画像のパス
     """
+
     capture_path = default_capture_path = Path.cwd() / "capture.png"
 
     def __init__(self, capture_path: Path = default_capture_path) -> None:
+        """コンストラクタ
+
+        Args:
+            capture_path (Path, optional): キャプチャ画像のパス
+                デフォルトはカレントディレクトリの"capture.png"
+        """
         self.config = dotenv_values()
         genai.configure(api_key=self.config.get("GEMINI_API_KEY"))
         self.model = genai.GenerativeModel("gemini-2.0-flash")

@@ -7,23 +7,23 @@ from PIL import ImageGrab
 
 
 class ScreenCaptureApp:
-    """スクリーンキャプチャアプリケーションのクラス。
+    """スクリーンキャプチャアプリケーションのクラス
 
     Attributes:
-        root (Tk): Tkinterのルートウィンドウ。
-        canvas (Canvas): 描画用のキャンバス。
-        start_x (int): マウスドラッグ開始時のX座標。
-        start_y (int): マウスドラッグ開始時のY座標。
-        rect (int): 描画された矩形のID。
+        root (Tk): Tkinterのルートウィンドウ
+        canvas (Canvas): 描画用のキャンバス
+        start_x (int): マウスドラッグ開始時のX座標
+        start_y (int): マウスドラッグ開始時のY座標
+        rect (int): 描画された矩形のID
     """
 
     capture_path = default_capture_path = Path.cwd() / "capture.png"
 
     def __init__(self, root: Tk, capture_path: Path = default_capture_path) -> None:
-        """ScreenCaptureAppのコンストラクタ。
+        """コンストラクタ
 
         Args:
-            root (Tk): Tkinterのルートウィンドウ。
+            root (Tk): Tkinterのルートウィンドウ
             capture_path (str): 画像の保存パス
         """
         # 表示スケールを取得する
@@ -47,10 +47,10 @@ class ScreenCaptureApp:
         self.capture_path = capture_path
 
     def on_button_press(self, event: tk.Event) -> None:
-        """マウスボタンが押された時のイベントハンドラ。
+        """マウスボタンが押された時のイベントハンドラ
 
         Args:
-            event (tk.Event): Tkinterのイベントオブジェクト。
+            event (tk.Event): Tkinterのイベントオブジェクト
         """
         self.start_x = event.x
         self.start_y = event.y
@@ -59,19 +59,19 @@ class ScreenCaptureApp:
         )
 
     def on_mouse_drag(self, event: tk.Event) -> None:
-        """マウスドラッグ時のイベントハンドラ。
+        """マウスドラッグ時のイベントハンドラ
 
         Args:
-            event (tk.Event): Tkinterのイベントオブジェクト。
+            event (tk.Event): Tkinterのイベントオブジェクト
         """
         cur_x, cur_y = (event.x, event.y)
         self.canvas.coords(self.rect, self.start_x, self.start_y, cur_x, cur_y)
 
     def on_button_release(self, event: tk.Event) -> None:
-        """マウスボタンが離された時のイベントハンドラ。
+        """マウスボタンが離された時のイベントハンドラ
 
         Args:
-            event (tk.Event): Tkinterのイベントオブジェクト。
+            event (tk.Event): Tkinterのイベントオブジェクト
         """
         end_x, end_y = (event.x, event.y)
         x1 = min(self.start_x, end_x)
@@ -91,10 +91,10 @@ class ScreenCaptureApp:
             self.root.destroy()
 
     def on_escape(self, event: tk.Event) -> None:
-        """Escキーが押された時のイベントハンドラ。
+        """Escキーが押された時のイベントハンドラ
 
         Args:
-            event (tk.Event): Tkinterのイベントオブジェクト。
+            event (tk.Event): Tkinterのイベントオブジェクト
         """
         messagebox.showwarning("警告", "選択作業がキャンセルされました。")
         if self.capture_path.exists():
@@ -102,13 +102,13 @@ class ScreenCaptureApp:
         self.root.destroy()
 
     def capture_and_save(self, x1: int, y1: int, x2: int, y2: int) -> None:
-        """スクリーンキャプチャを行い、画像を保存する。
+        """スクリーンキャプチャを行い、画像を保存する
 
         Args:
-            x1 (int): 矩形の左上のX座標。
-            y1 (int): 矩形の左上のY座標。
-            x2 (int): 矩形の右下のX座標。
-            y2 (int): 矩形の右下のY座標。
+            x1 (int): 矩形の左上のX座標
+            y1 (int): 矩形の左上のY座標
+            x2 (int): 矩形の右下のX座標
+            y2 (int): 矩形の右下のY座標
         """
         # スケールに応じて座標を調整
         x1_scaled = int(x1 * self.display_scale)
@@ -121,7 +121,7 @@ class ScreenCaptureApp:
 
 
 def main(capture_path: Path = ScreenCaptureApp.default_capture_path) -> None:
-    """スクリーンキャプチャアプリケーションを起動する。"""
+    """メイン処理"""
     root = tk.Tk()
     ScreenCaptureApp(root, capture_path)
     root.mainloop()

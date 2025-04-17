@@ -17,6 +17,11 @@ FONT_SIZE = 14  # フォントサイズ
 
 
 class CaptureAndTranslateGUI(ctk.CTk):
+    """キャプチャ結果を表示するダイアログクラス
+
+    Args:
+        ctk (_type_): customtkinterのCTkクラスを継承
+    """
     def __init__(self, text: str):
         """コンストラクタ
 
