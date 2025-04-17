@@ -2,7 +2,7 @@ from pathlib import Path
 from tkinter import messagebox
 
 import customtkinter as ctk
-from dotenv import load_dotenv, set_key
+from dotenv import set_key
 
 ENV_PATH = Path.cwd() / ".env"  # 設定ファイルのパス
 
@@ -13,15 +13,21 @@ FONT_SIZE = 14  # フォントサイズ
 
 
 class SettingsApp(ctk.CTk):
+    """設定画面を表示するクラス
+
+    Args:
+        ctk (_type_): customtkinterのCTkクラスを継承
+    """
     def __init__(self):
         """コンストラクタ"""
         super().__init__()
         ctk.FontManager.load_font(FONT_PATH.as_posix())  # フォントを読み込む
 
         # フォームのセットアップをする
-        self.setup_form(self.text)
+        self.setup_form()
 
-    def setup_form(self, text: str) -> None:
+    def setup_form(self) -> None:
+        """設定画面を表示する"""
         ctk.set_appearance_mode("System")  # 外観モードを設定
         ctk.set_default_color_theme("blue")  # カラーテーマを設定
 
