@@ -1,7 +1,7 @@
-# Capture and Translate
-画面をキャプチャして、文字起こし（翻訳や要約なども）を行う
+# Capture_and_Translate
+画面をキャプチャして、文字起こし（翻訳や要約なども）を行うアプリです
 ## 環境の構築方法
-- 開発時のPythonのバージョン: 3.12.8
+- 開発時のPythonのバージョン: 3.13.3
 - 環境構築.batをダブルクリック
 ## 実行用バッチファイルをタスクバーにピン止めする方法
 - デスクトップに新規テキストファイルを作成し、ファイル名を`Capture and Translate.exe`にする
@@ -20,6 +20,6 @@
 ## 使っているパッケージ
 - customtkinter 5.2.2 (pip install customtkinter)
 - google-generativeai 0.8.4 (pip install google-generativeai)
-- pillow 11.1.0 (pip install pillow)
+- pillow 11.2.0 (pip install pillow)
 - pyperclip 1.9.0 (pip install pyperclip)
 - python-dotenv 1.1.0 (pip install python-dotenv)
